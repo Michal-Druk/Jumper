@@ -1,13 +1,6 @@
 # Jumper
 Nand2Tetris 09 project
 
-Files
----------------
-README                  - This file.
-Main.jack, Man.jack, Bar.jack, Game.jack  - The Code Jack files.
-Main.vm, Man.vm, Bar.vm, Game.vm - The Code vm files.
----------------
-
 Jumper is an atractive game where the goal is to to be able to survive on the falling bars and not fall to the bottom of the screen
 
 Jumper game
