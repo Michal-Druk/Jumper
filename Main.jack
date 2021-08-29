@@ -1,0 +1,29 @@
+/** Initializes a new game and starts running it. */
+class Main {
+    function void main() {
+        var Game game;
+        var char key;
+        do Output.moveCursor(16,18);
+        do Output.printString("Press Enter to start ");
+        while(true){
+            let key = Keyboard.keyPressed();
+            if (key=128){  //Enter key 
+                do Screen.clearScreen();
+                do Output.moveCursor(12,18);
+                do Output.printString("--------Starting----------");
+                do Output.moveCursor(15,22);
+                do Output.printString("Press Esc to exit");
+                do Sys.wait(2000);
+                do Screen.clearScreen();
+                let game = Game.new();
+                do game.run(); //run the game
+                do game.dispose();
+                do Output.moveCursor(15,18);
+                do Output.printString("Press Enter to start a new game");     
+            }
+         }
+        return;
+    }
+
+    
+}

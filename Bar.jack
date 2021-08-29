@@ -1,0 +1,53 @@
+/** Implements a Bar. */
+class Bar {
+
+   field int  manX,manY, x, y, width; 
+
+   /** Constructs a new Bar with a given location  */
+   constructor Bar new(int barX, int barY) {
+      let width = 80; //the bar width
+      let x = barX;
+      let y = barY;
+      return this;
+   }
+
+   /** Disposes this Bar. */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Draws the Bar on the screen. */
+   method void draw() {
+      do Screen.setColor(true);
+      do Screen.drawLine(x, y, x + width, y);
+      return;
+   }
+
+   /** Erases the Bar from the screen. */
+   method void erase() {
+      do Screen.setColor(false);
+      do Screen.drawLine(x, y, x + width, y);
+      return;
+   }
+
+   /** Checks if the man is on the Bar */
+   method int manOnBar(int manX, int manY){
+      if ( (manY=y) &((manX+7)>(x-1)) & ((manX-7)<(x+width+1))){
+            return 1;
+      } 
+      return 0;
+   }
+
+   /** Moves the Bar down by num pixels. */
+   method int scroll(int num) {
+     do erase();
+     let y = y + num;
+     if (y > 250){     // new y is off limits
+        return 1;
+     }
+     do draw();
+      return 0;
+   }
+
+}

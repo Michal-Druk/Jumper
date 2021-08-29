@@ -1,0 +1,159 @@
+/** Implements a Man. */
+class Man {
+
+   field int x, y, memAddress ,location;
+
+   /** Constructs a new Man with a given location. */
+   constructor Man new(int manX, int manY) {
+      let x = manX;
+      let y = manY;
+      let location=(32*y)+(Math.divide(x,16));
+      return this;
+   }
+
+   /** return the x */
+   method int getX(){
+      return x;
+   }
+
+   /** return the x */
+   method int getY(){
+      return y;
+   }
+
+   /** set the location */
+   method void setLocation(){
+      let location=(32*y)+(Math.divide(x,16));
+      return;
+   }
+
+   /** Disposes this Man. */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+      /** Draws the Man on the screen. */
+   method void draw() {
+   let memAddress = 16384+location;
+	   do Memory.poke(memAddress+0, 0);
+      do Memory.poke(memAddress+32, 0);
+      do Memory.poke(memAddress+64, 0);
+      do Memory.poke(memAddress+96, 0);
+      do Memory.poke(memAddress+128, 8128);
+      do Memory.poke(memAddress+160, -8136);
+      do Memory.poke(memAddress+192, -32756);
+      do Memory.poke(memAddress+224, -32764);
+      do Memory.poke(memAddress+256, -32764);
+      do Memory.poke(memAddress+288, -29692);
+      do Memory.poke(memAddress+320, -27708);
+      do Memory.poke(memAddress+352, -2484);
+      do Memory.poke(memAddress+384, 5192);
+      do Memory.poke(memAddress+416, 13896);
+      do Memory.poke(memAddress+448, 8252);
+      do Memory.poke(memAddress+480, 4167);
+      let memAddress = 16384+location+512;
+      do Memory.poke(memAddress+0, 8065);
+      do Memory.poke(memAddress+32, 28673);
+      do Memory.poke(memAddress+64, 16393);
+      do Memory.poke(memAddress+96, 16393);
+      do Memory.poke(memAddress+128, -12279);
+      do Memory.poke(memAddress+160, -28663);
+      do Memory.poke(memAddress+192, -28647);
+      do Memory.poke(memAddress+224, -28655);
+      do Memory.poke(memAddress+256, -28655);
+      do Memory.poke(memAddress+288, -3809);
+      do Memory.poke(memAddress+320, 4376);
+      do Memory.poke(memAddress+352, 4360);
+      do Memory.poke(memAddress+384, 4360);
+      do Memory.poke(memAddress+416, 12552);
+      do Memory.poke(memAddress+448, 8456);
+      do Memory.poke(memAddress+480, 16376);
+      return;
+   }
+
+   /** Erases the Man from the screen. */
+   method void erase() {
+      let memAddress = 16384+location;
+      do Memory.poke(memAddress+0, 0);
+      do Memory.poke(memAddress+32, 0);
+      do Memory.poke(memAddress+64, 0);
+      do Memory.poke(memAddress+96, 0);
+      do Memory.poke(memAddress+128, 0);
+      do Memory.poke(memAddress+160, 0);
+      do Memory.poke(memAddress+192, 0);
+      do Memory.poke(memAddress+224, 0);
+      do Memory.poke(memAddress+256, 0);
+      do Memory.poke(memAddress+288, 0);
+      do Memory.poke(memAddress+320, 0);
+      do Memory.poke(memAddress+352, 0);
+      do Memory.poke(memAddress+384, 0);
+      do Memory.poke(memAddress+416, 0);
+      do Memory.poke(memAddress+448, 0);
+      do Memory.poke(memAddress+480, 0);
+      let memAddress = 16384+location+512;
+      do Memory.poke(memAddress+0, 0);
+      do Memory.poke(memAddress+32, 0);
+      do Memory.poke(memAddress+64, 0);
+      do Memory.poke(memAddress+96, 0);
+      do Memory.poke(memAddress+128, 0);
+      do Memory.poke(memAddress+160, 0);
+      do Memory.poke(memAddress+192, 0);
+      do Memory.poke(memAddress+224, 0);
+      do Memory.poke(memAddress+256, 0);
+      do Memory.poke(memAddress+288, 0);
+      do Memory.poke(memAddress+320, 0);
+      do Memory.poke(memAddress+352, 0);
+      do Memory.poke(memAddress+384, 0);
+      do Memory.poke(memAddress+416, 0);
+      do Memory.poke(memAddress+448, 0);
+      do Memory.poke(memAddress+480, 0);
+      return;
+   }
+
+   /** Jump the Man up by num pixels. */
+   method void jump(int num) {
+      do erase();
+      if (y>0){
+         let y=y-num;
+         do setLocation();
+      }
+      return;
+   }
+
+   /** Move the Man left by num pixels. */
+   method void moveLeft(int num) {
+      do erase();
+      if (x>0){
+         let x = x-num;
+         do setLocation();
+      }
+      return;
+   }
+
+   /** Move the Man right by num pixels. */
+   method void moveRight(int num) {
+      do erase();
+      if (x<512){
+         let x = x+num;
+         do setLocation();
+      }
+      return;
+   }
+
+
+   /** Moves the Man down by num pixels. */
+   method boolean gravity(int num) {
+      do erase();
+      let y = y + num;
+      do setLocation();
+      if (y>224){
+         let y=224;
+         do setLocation();
+         do Output.moveCursor(13,18);
+         do Output.printString("--------game over----------");
+         return true;
+      }
+      return false;
+   }
+}

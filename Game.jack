@@ -1,0 +1,210 @@
+/**
+ * Implements the game.
+ */
+
+class Game {
+
+   field Man man; 
+   field Bar bar1, bar2, bar3, bar4, bar5;
+   field int mode, answer, manX, manY,  speed, grav, barkind,  status;
+   field string  prestr, poststr; 
+   field boolean win;
+
+   /** Constructs a new  Game. */
+   constructor Game new() {
+      let speed = 1;
+      let grav = 4;
+      let barkind = 0;
+      let win=false; 
+      let mode=1;
+
+      let man = Man.new(270,0);
+      let bar1 = Bar.new(150, 1);
+      let bar2 = Bar.new(200, 50);
+      let bar3 = Bar.new(270, 100);
+      let bar4 = Bar.new(220, 150);
+      let bar5 = Bar.new(150, 200);
+     
+      do updatePrint();
+      return this;
+   }
+
+   /** Dispose this game. */
+   method void dispose() {
+      do man.dispose();
+      do bar1.dispose();
+      do bar2.dispose();
+      do bar3.dispose();
+      do bar4.dispose();
+      do bar5.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** updete the mode string */
+   method void updatePrint(){
+      do Screen.setColor(false);
+      do Screen.drawRectangle(0,243,511,255);//Cleanup status bar
+      do Output.moveCursor(22,0);
+      do Output.printString("Mode: ");
+      do Output.printInt(mode);
+      return;
+   }
+
+   /** Creates a new bar in case any bar comes off the screen*/
+   method Bar barHandler(Bar bar){
+      let status = bar.scroll(speed);
+      if(status = 1){ //bar comes off the screen
+         if (barkind=0){ 
+            let bar = Bar.new(210, 1);
+            let barkind = 1 ;
+         } else{
+            if (barkind=1){
+               let bar = Bar.new(270, 1);
+               let barkind = 2 ;
+            } else{
+               if (barkind=2){
+                  let bar = Bar.new(310, 1);
+                  let barkind = 3 ;
+               } else{
+                  if (barkind=3){
+                     let bar = Bar.new(250, 1);
+                     let barkind = 4 ;
+                  } else{
+                     if (barkind=4){
+                        let bar = Bar.new(180, 1);
+                        let barkind = 5 ;
+                     } else{
+                        if (barkind=5){
+                           let bar = Bar.new(230, 1);
+                           let barkind =6 ;
+                        } else{
+                           if (barkind=6){
+                              let bar = Bar.new(290, 1);
+                              let barkind = 0 ;
+                              if (mode=1){
+                                 let mode=2;
+                              } else{
+                                 if (mode=2){
+                                    let mode=3;
+                                 } else{ 
+                                    let win=true;
+                                 }
+                              }        
+                              do updatePrint();
+                              let speed=speed+1;
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+         do bar.draw();
+      }
+      return bar;
+   }
+
+   /** return positive num in case the man on bar  */ 
+   method int setOnBar(int num, int onBar){
+      let manY=man.getY()+num;
+      let onBar=onBar+bar1.manOnBar(manX,manY);
+      let onBar=onBar+bar2.manOnBar(manX,manY);
+      let onBar=onBar+bar3.manOnBar(manX,manY);
+      let onBar=onBar+bar4.manOnBar(manX,manY);
+      let onBar=onBar+bar5.manOnBar(manX,manY);
+      return onBar;
+   }
+
+   /** check if the man on bar */
+   method int isManOnBar(){
+      var int onBar;
+      let onBar=0;
+      let manX=man.getX();
+      let onBar=setOnBar(32, onBar);
+      let onBar=setOnBar(31, onBar);
+      let onBar=setOnBar(30, onBar);
+      let onBar=setOnBar(29, onBar);
+      let onBar=setOnBar(28, onBar);
+      let onBar=setOnBar(27, onBar);
+      let onBar=setOnBar(26, onBar);
+      return onBar;
+   }
+   
+   /** set the grav variable*/
+   method void setGrav(){
+         let answer=isManOnBar();
+         if ((answer>0)){ // if the man on bar
+            let grav=speed; //go down with the bars going down speed
+         } 
+         else{
+            let grav=speed+3; //fall down quickly
+         }
+      return;
+   }
+
+   /** Runs the game: handles the user's inputs and moves man */
+   method void run() {
+      var char key;  
+      var boolean exit;
+      var int status;
+      
+      let exit = false;
+      do Sys.wait(1000);
+      
+      while (~exit) {
+         do bar1.draw();
+         do bar2.draw();
+         do bar3.draw();
+         do bar4.draw();
+         do bar5.draw();
+
+         let key = Keyboard.keyPressed(); // the key currently pressed by the user
+         if (key = 32) { // the Space key
+            let grav=speed+3;
+            let answer=isManOnBar();
+            if ((answer>0)){ //if man on bar- jump
+               do man.jump(70);
+            } 
+         } 
+         if (key = 132) { // the Right arrow key
+            do man.moveRight(3); 
+         } 
+         if (key = 130) { // the Left arrow key
+            do man.moveLeft(3); 
+         }     
+      
+         let bar1= barHandler(bar1);
+         let bar2=barHandler(bar2);
+         let bar3=barHandler(bar3);
+         let bar4=barHandler(bar4);
+         let bar5=barHandler(bar5);
+         do setGrav();
+         if(~exit){
+            // if man is on the floor- set exit to true
+            let exit=man.gravity(grav);
+         }
+         do man.draw();
+         do bar1.draw();
+         do bar2.draw();
+         do bar3.draw();
+         do bar4.draw();
+         do bar5.draw();
+         if (win){
+            // handle the case the user won (finished mode 3)
+            let exit=true;
+            do Output.moveCursor(13,18);
+            do Output.printString("--------You Won----------");
+         }
+         if (key = 140) { // the Esc key
+            //exit the current game
+            let exit = true;
+            do Screen.clearScreen(); 
+         } 
+
+         do Sys.wait(20);  // delays the next movement
+
+     }
+     return;
+   }
+}
