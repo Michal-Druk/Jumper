@@ -1,4 +1,5 @@
 
+![20210829_231237 00_00_00-00_00_18](https://user-images.githubusercontent.com/86184084/131264738-f19bfbe0-e6d9-40db-a029-9d4dbfea7698.gif)
 
 
 # Jumper
@@ -28,5 +29,5 @@ Click yes in the confirmationg dialog
 In the toolbar, choose No animation in the Animate dropdown
 In the toolbar, click the double right arrows (3rd icon)
 Play the game!
-![20210829_231237 00_00_00-00_00_18](https://user-images.githubusercontent.com/86184084/131264706-c858d971-1744-4c8d-bed6-5edff802a965.gif)
+
 
