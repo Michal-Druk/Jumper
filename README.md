@@ -1,5 +1,6 @@
 
-![20210829_231237 00_00_00-00_00_18](https://user-images.githubusercontent.com/86184084/131264738-f19bfbe0-e6d9-40db-a029-9d4dbfea7698.gif)
+![20210829_231237 00_00_00-00_00_18 00_00_00-00_00_30](https://user-images.githubusercontent.com/86184084/131264802-8e539754-1f35-4cda-889e-3ed97d38706b.gif)
+
 
 
 # Jumper
