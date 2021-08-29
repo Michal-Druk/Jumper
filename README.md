@@ -1,6 +1,5 @@
 
 
-https://user-images.githubusercontent.com/86184084/131260552-665c3ead-04a6-401a-a4f7-c7bf5b3739a6.mp4
 
 # Jumper
 Nand2Tetris 09 project
@@ -29,4 +28,5 @@ Click yes in the confirmationg dialog
 In the toolbar, choose No animation in the Animate dropdown
 In the toolbar, click the double right arrows (3rd icon)
 Play the game!
+![20210829_231237 00_00_00-00_00_18](https://user-images.githubusercontent.com/86184084/131264706-c858d971-1744-4c8d-bed6-5edff802a965.gif)
 
